@@ -42,7 +42,7 @@ export function ResetPasswordPage() {
       return;
     }
     
-    if (password.length < 8) {
+    if (password.length < 6) {
       toast.error('Passwort muss mindestens 8 Zeichen lang sein');
       return;
     }

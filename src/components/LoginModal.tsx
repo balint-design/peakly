@@ -67,20 +67,10 @@ export function LoginModal({ onClose, onSignUpClick }: LoginModalProps) {
             </div>
 
             <div>
+              <div className="flex justify-between">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Passwort
               </label>
-              <input
-                id="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
-              />
-            </div>
-
-            <div className="flex justify-end">
               <button
                 type="button"
                 onClick={async () => {
@@ -98,11 +88,22 @@ export function LoginModal({ onClose, onSignUpClick }: LoginModalProps) {
                     setLoading(false);
                   }
                 }}
-                className="text-sm text-gray-600 hover:text-black mb-4"
+                className="text-sm text-gray-400 hover:text-black"
               >
                 Passwort vergessen?
               </button>
+              </div>
+
+              <input
+                id="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
+              />
             </div>
+
 
             <button
               type="submit"

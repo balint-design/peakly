@@ -1,7 +1,7 @@
 import { supabase } from './supabase';
 import type { Profile, UserSkill, Skill } from '../types/database';
 
-async function getProfile(usernameOrId: string): Promise<Profile | null> {
+export async function getProfile(usernameOrId: string): Promise<Profile | null> {
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
@@ -197,12 +197,39 @@ export async function resetPassword(email: string): Promise<void> {
   if (error) throw error;
 }
 
-export async function updatePassword(newPassword: string): Promise<void> {
-  const { error } = await supabase.auth.updateUser({
-    password: newPassword,
-  });
-
-  if (error) throw error;
+export async function updatePassword(newPassword: string, accessToken?: string): Promise<void> {
+  if (accessToken) {
+    // Use the token for password reset flow
+    console.log('Attempting password reset with token:', accessToken);
+    
+    // For PKCE tokens, we need to use the correct method
+    const { error: resetError } = await supabase.auth.verifyOtp({
+      token_hash: accessToken,
+      type: 'recovery'
+    });
+    
+    if (resetError) {
+      console.error('Token verification error:', resetError);
+      throw resetError;
+    }
+    
+    // Now update the password
+    const { error: updateError } = await supabase.auth.updateUser({
+      password: newPassword
+    });
+    
+    if (updateError) {
+      console.error('Password update error:', updateError);
+      throw updateError;
+    }
+  } else {
+    // Normal flow for already authenticated users
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) {
+      console.error('Password update error (no token):', error);
+      throw error;
+    }
+  }
 }
 
 export async function deleteAccount(password: string): Promise<void> {

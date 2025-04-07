@@ -4,6 +4,7 @@ import { updatePassword } from '../lib/auth';
 import { supabase } from '../lib/supabase';
 import toast from 'react-hot-toast';
 
+
 export function ResetPasswordPage() {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -11,18 +12,28 @@ export function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   
+  // Store the access token
+  const [accessToken, setAccessToken] = useState('');
+  
   useEffect(() => {
-    // Check if we have a hash parameter in the URL (indicates password reset)
+    // Check if we have the necessary parameters in the URL
     const hash = window.location.hash;
-    if (hash && hash.includes('type=recovery')) {
+    const hashParams = new URLSearchParams(hash.substring(1));
+    const token = hashParams.get('access_token');
+    const type = hashParams.get('type');
+    
+    console.log('Debug - URL Params:', { token, type, hash });
+    
+    if (token && type === 'recovery') {
+      setAccessToken(token);
       setShowForm(true);
     } else {
-      // User navigated here directly without a reset link
+      // No valid token found
       toast.error('Ungültiger oder abgelaufener Link');
       setTimeout(() => navigate('/'), 3000);
     }
   }, [navigate]);
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -31,15 +42,15 @@ export function ResetPasswordPage() {
       return;
     }
     
-    if (password.length < 6) {
-      toast.error('Passwort muss mindestens 6 Zeichen lang sein');
+    if (password.length < 8) {
+      toast.error('Passwort muss mindestens 8 Zeichen lang sein');
       return;
     }
     
     setLoading(true);
     
     try {
-      await updatePassword(password);
+      await updatePassword(password, accessToken);
       toast.success('Passwort erfolgreich geändert');
       
       // Check if user is now logged in
@@ -52,6 +63,7 @@ export function ResetPasswordPage() {
         navigate('/');
       }
     } catch (error) {
+      console.error('Password reset error:', error);
       toast.error(error instanceof Error ? error.message : 'Ein Fehler ist aufgetreten');
       setLoading(false);
     }

@@ -1,11 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { useAuth } from './hooks/useAuth';
-import { ErrorBoundary } from './components/shared/ErrorBoundary';
-import { LoadingScreen } from './components/shared/LoadingScreen';
-import { Footer } from './components/shared/Footer';
-import { ResetPasswordPage } from './components/ResetPasswordPage';
+import { useAuth, ResetPasswordPage } from './features/auth';
+import { ErrorBoundary, LoadingScreen, Footer } from './components/common';
 
 // Lazy load components with error handling
 const LandingPage = lazy(() => import('./components/LandingPage')

@@ -1,5 +1,5 @@
-import { supabase } from './supabase';
-import type { Profile, UserSkill, Skill } from '../types/database';
+import { supabase } from '../../../lib/supabase';
+import type { Profile, UserSkill, Skill } from '../../../types/database';
 
 export async function getProfile(usernameOrId: string): Promise<Profile | null> {
   const { data, error } = await supabase
@@ -202,16 +202,15 @@ export async function updatePassword(newPassword: string, accessToken?: string):
     // Use the token for password reset flow
     console.log('Attempting password reset with token:', accessToken);
     
-    // For PKCE tokens, we need to use the correct method
-    const { error: resetError } = await supabase.auth.verifyOtp({
-      token_hash: accessToken,
-      type: 'recovery'
-    });
+    // First exchange the access token for a session
+    const { error: sessionError, data: sessionData } = await supabase.auth.exchangeCodeForSession(accessToken);
     
-    if (resetError) {
-      console.error('Token verification error:', resetError);
-      throw resetError;
+    if (sessionError) {
+      console.error('Session exchange error:', sessionError);
+      throw sessionError;
     }
+    
+    console.log('Session exchange successful:', sessionData);
     
     // Now update the password
     const { error: updateError } = await supabase.auth.updateUser({

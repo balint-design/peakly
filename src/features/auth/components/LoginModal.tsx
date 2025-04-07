@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { signIn, resetPassword } from '../lib/auth';
+import { signIn, resetPassword } from '../api/auth';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 

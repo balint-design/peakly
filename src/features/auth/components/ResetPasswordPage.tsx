@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { updatePassword } from '../lib/auth';
-import { supabase } from '../lib/supabase';
+import { updatePassword } from '../api/auth';
+import { supabase } from '../../../lib/supabase';
 import toast from 'react-hot-toast';
 
 
@@ -42,7 +42,7 @@ export function ResetPasswordPage() {
       return;
     }
     
-    if (password.length < 6) {
+    if (password.length < 8) {
       toast.error('Passwort muss mindestens 8 Zeichen lang sein');
       return;
     }

@@ -1,3 +1,21 @@
 {
-	"siteId": "8626d09f-63cb-45b6-a257-a153ad64280b"
+	"geolocation": {
+		"data": {
+			"city": "Bern",
+			"country": {
+				"code": "CH",
+				"name": "Switzerland"
+			},
+			"subdivision": {
+				"code": "BE",
+				"name": "Bern"
+			},
+			"timezone": "Europe/Zurich",
+			"latitude": 46.9411,
+			"longitude": 7.3856,
+			"postalCode": "3018"
+		},
+		"timestamp": 1744040106368
+	},
+	"siteId": "92d3c588-4c9e-4977-8c4a-91105bf14906"
 }

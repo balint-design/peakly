@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'Safiro';
+  src: url('https://iqqjvjzvzizrxbymrjoc.supabase.co/storage/v1/object/public/peakly/logo/safiro-semibold-webfont.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-safiro antialiased bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-light-text text-light-background dark:bg-dark-text dark:text-dark-background px-6 py-3 rounded-xl flex items-center gap-2 hover:opacity-90 transition-all;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 border border-light-border dark:border-dark-border rounded-xl hover:bg-light-accent dark:hover:bg-dark-accent transition-all;
+  }
+  
+  .card {
+    @apply bg-light-background dark:bg-dark-background rounded-xl p-6 border border-light-border dark:border-dark-border;
+  }
+  
+  .input {
+    @apply w-full px-4 py-3 border border-light-border dark:border-dark-border rounded-xl bg-light-background dark:bg-dark-background focus:ring-1 focus:ring-light-text dark:focus:ring-dark-text focus:border-light-text dark:focus:border-dark-text transition-all;
+  }
+  
+  .menu-item {
+    @apply w-full px-4 py-3 text-left hover:bg-light-accent dark:hover:bg-dark-accent flex items-center gap-2 transition-all;
+  }
+  
+  .skill-badge {
+    @apply bg-light-accent dark:bg-dark-accent px-4 py-2 rounded-xl;
+  }
+  
+  .language-badge {
+    @apply px-3 py-1 border border-light-border dark:border-dark-border rounded-xl text-sm hover:bg-light-accent dark:hover:bg-dark-accent transition-all;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
